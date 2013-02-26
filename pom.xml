@@ -1,0 +1,170 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.rptools</groupId>
+  <artifactId>rptools</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>RPTools Common</name>
+  <description>Common project build settings for rptools projects</description>
+  
+  <url>www.rptools.net</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javaVersion>1.7</javaVersion>
+    <timestamp>${maven.build.timestamp}</timestamp>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+    <antlr.version>3.4</antlr.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
+      <scope>test</scope>
+    </dependency>
+    <!--<dependency>  
+      <groupId>com.oracle</groupId>  
+      <artifactId>javafx</artifactId>  
+      <version>2.2</version>  
+      <systemPath>${java.home}/lib/jfxrt.jar</systemPath>  
+      <scope>system</scope>  
+      </dependency>  -->
+  </dependencies>
+  <build>
+    <!--
+        Set up the resources directory so that property substitution 
+        occurs for any file that matches the name *-build.properties
+        but not on any other file in the resources directory.  
+    -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*-build.properties</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/*-build.properties</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    
+    <plugins>
+      <!-- Set the java compiler options -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>${javaVersion}</source>
+          <target>${javaVersion}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <show>private</show>
+          <nohelp>true</nohelp>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-source-plugin</artifactId>
+        <version>2.2</version>
+      </plugin>
+    </plugins>
+    
+    <!-- Default values for child projects plugins -->
+    <pluginManagement>        
+        <plugins>
+            <!-- 
+            Shade plugin that will generate a jar with dependacies
+            Properties used
+                mainClass - the class (i.e. what is run when using java -jar ...)
+            -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>1.7.1</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                <transformers>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <mainClass>${mainClass}</mainClass>
+                  </transformer>
+                </transformers>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>com.zenjava</groupId>
+          <artifactId>javafx-maven-plugin</artifactId>
+          <version>1.4</version>
+          <configuration>
+            <mainClass>${mainClass}</mainClass>
+            <!-- only required if signing the jar file -->
+            <!--<keyStoreAlias>example-user</keyStoreAlias>-->
+            <!--<keyStorePassword>example-password</keyStorePassword>-->
+            <permissions>
+              <permission>all-permissions</permission>
+            </permissions>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>2.5.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>2.7.1</version>
+        <configuration>
+          <targetJdk>${javaVersion}</targetJdk>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+
+  <repositories>
+    <!-- Temporary Repository, this will change once everything is set up -->
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
+        </releases>
+            <id>rptools</id>
+            <name>RPTools Maven Repository</name>
+            <url>http://lmwcs.com/maven-repo</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+  
+</project>
