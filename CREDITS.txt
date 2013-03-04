@@ -1,0 +1,28 @@
+RPTools
+Copyright 2005 - 2013 RPTools contributors.
+http://rptools.net
+
+------------------------------------------------------------
+
+RPTools project makes use or includes the libraries listed below.
+
+ANTLRv3
+------------------------------
+Website:    http://www.antlr3.org
+License:    The BSD License (http://www.antlr3.org/license.html)
+Copyright:  Copyright (c) 2010 Terence Parr
+
+
+
+
+Rhino JavaScript
+------------------------------
+Website:    http://www.mozilla.org/rhino/ 
+License:    Mozilla Public License (http://www.mozilla.org/MPL/)
+
+
+Apache Commons
+------------------------------
+Apache Commons Codec
+Webstie:    http://commons.apache.org/proper/commons-codec/
+Licesnse:   Apache License v2 (http://www.apache.org/licenses/LICENSE-2.0)  
