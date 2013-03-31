@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.rptools</groupId>
   <artifactId>rptools</artifactId>
@@ -6,7 +7,7 @@
   <packaging>pom</packaging>
   <name>RPTools Common</name>
   <description>Common project build settings for rptools projects</description>
-  
+
   <url>www.rptools.net</url>
 
   <properties>
@@ -23,19 +24,30 @@
       <version>4.8.2</version>
       <scope>test</scope>
     </dependency>
-    <!--<dependency>  
-      <groupId>com.oracle</groupId>  
-      <artifactId>javafx</artifactId>  
-      <version>2.2</version>  
-      <systemPath>${java.home}/lib/jfxrt.jar</systemPath>  
-      <scope>system</scope>  
-      </dependency>  -->
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>3.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.2</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
   <build>
     <!--
-        Set up the resources directory so that property substitution 
+        Set up the resources directory so that property substitution
         occurs for any file that matches the name *-build.properties
-        but not on any other file in the resources directory.  
+        but not on any other file in the resources directory.
     -->
     <resources>
       <resource>
@@ -53,7 +65,7 @@
         </excludes>
       </resource>
     </resources>
-    
+
     <plugins>
       <!-- Set the java compiler options -->
       <plugin>
@@ -76,24 +88,24 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-deploy-plugin</artifactId>
+        <artifactId>maven-deploy-plugin</artifactId>
         <version>2.7</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-source-plugin</artifactId>
+        <artifactId>maven-source-plugin</artifactId>
         <version>2.2</version>
       </plugin>
     </plugins>
-    
+
     <!-- Default values for child projects plugins -->
-    <pluginManagement>        
-        <plugins>
-            <!-- 
-            Shade plugin that will generate a jar with dependacies
-            Properties used
-                mainClass - the class (i.e. what is run when using java -jar ...)
-            -->
+    <pluginManagement>
+      <plugins>
+        <!--
+        Shade plugin that will generate a jar with dependacies
+        Properties used
+            mainClass - the class (i.e. what is run when using java -jar ...)
+        -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
@@ -119,6 +131,7 @@
           <artifactId>javafx-maven-plugin</artifactId>
           <version>1.4</version>
           <configuration>
+            <vendor>RPTools</vendor>
             <mainClass>${mainClass}</mainClass>
             <!-- only required if signing the jar file -->
             <!--<keyStoreAlias>example-user</keyStoreAlias>-->
@@ -131,7 +144,7 @@
       </plugins>
     </pluginManagement>
   </build>
-  
+
 
   <reporting>
     <plugins>
@@ -159,12 +172,12 @@
         <enabled>true</enabled>
         <updatePolicy>always</updatePolicy>
         <checksumPolicy>fail</checksumPolicy>
-        </releases>
-            <id>rptools</id>
-            <name>RPTools Maven Repository</name>
-            <url>http://lmwcs.com/maven-repo</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
-  
+      </releases>
+      <id>rptools</id>
+      <name>RPTools Maven Repository</name>
+      <url>http://lmwcs.com/maven-repo</url>
+      <layout>default</layout>
+    </repository>
+  </repositories>
+
 </project>
